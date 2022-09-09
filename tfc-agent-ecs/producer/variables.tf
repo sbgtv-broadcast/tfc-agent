@@ -81,15 +81,13 @@ variable "ttl" {
 
 
 locals {
-  shortened_account_number     = substr("${data.aws_caller_identity.current.account_id}", -4, -1)
-  associated_resource_name     = "${var.project}-${var.aws_account_name}-${local.shortened_account_number}-${data.aws_region.current.name}-${var.env}"
-  capitalized_aws_account_name = upper(var.aws_account_name)
+  # shortened_account_number     = substr("${data.aws_caller_identity.current.account_id}", -4, -1)
+  associated_resource_name = "${var.project}-${var.aws_account_name}-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}-${var.env}"
   common_tags = {
     Terraform          = "true"
     Environment        = var.env
     Project            = var.project
     Account            = data.aws_caller_identity.current.account_id
-    ShortAccount       = local.shortened_account_number
     GitRepo            = var.github_repo
     GitOrg             = var.github_org
     GitOwner           = var.github_owner
