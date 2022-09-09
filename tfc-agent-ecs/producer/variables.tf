@@ -79,10 +79,6 @@ variable "ttl" {
 #   }
 # }
 
-variable "aws_account_name" {
-  type        = string
-  description = "AWS account name. To be replaced with account alias"
-}
 
 locals {
   shortened_account_number     = substr("${data.aws_caller_identity.current.account_id}", -4, -1)
@@ -105,4 +101,37 @@ locals {
     terraform          = "true"  # true/false
     hc-internet-facing = "false" # true/false
   }
+}
+
+################################################################################
+######## Project Variables #####################################################
+################################################################################
+###  <account name or station sign> - <aws account number> - <region> - <environment>
+variable "aws_account_name" {
+  description = "AWS account name or SBGTV Station Call Sign: all lowercase, no spaces"
+  default     = "sandbox"
+}
+
+variable "env" {
+  description = "The environment. Values corresponding to the branch name"
+  default     = "prod"
+}
+## dev, stage, prod, qa (stands for sandbox or qa branch)
+variable "project" {
+  default = "tfc"
+}
+################################################################################
+######### Git Variables ########################################################
+################################################################################
+variable "github_repo" {
+  description = "GitHub repo hosting the infrastructure code"
+  default     = "tfc-agent"
+}
+variable "github_org" {
+  default = "github.com/sbgtv-broadcast"
+}
+variable "github_owner" {
+}
+variable "github_team" {
+  default = "admins"
 }
