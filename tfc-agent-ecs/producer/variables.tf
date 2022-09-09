@@ -79,6 +79,11 @@ variable "ttl" {
 #   }
 # }
 
+variable "aws_account_name" {
+  type        = string
+  description = "AWS account name. To be replaced with account alias"
+}
+
 locals {
   shortened_account_number     = substr("${data.aws_caller_identity.current.account_id}", -4, -1)
   associated_resource_name     = "${var.project}-${var.aws_account_name}-${local.shortened_account_number}-${data.aws_region.current.name}-${var.env}"
