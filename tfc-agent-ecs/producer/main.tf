@@ -55,7 +55,7 @@ resource "aws_ecs_task_definition" "tfc_agent" {
           },
           {
             name  = "TFC_AGENT_NAME",
-            value = "ECS_Fargate"
+            value = "ecs-fargate-${var.region}" ## custom agent name
           }
         ]
         secrets = [
