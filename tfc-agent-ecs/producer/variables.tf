@@ -67,32 +67,10 @@ variable "ttl" {
   default     = "1"
 }
 
-# // OPTIONAL Tags
-# locals {
-#   common_tags = {
-#     owner              = "your-name-here"
-#     se-region          = "your-region-here"
-#     purpose            = "Default state is dormant with no active resources. Runs a Terraform Cloud Agent when a run is queued."
-#     ttl                = var.ttl # hours
-#     terraform          = "true"  # true/false
-#     hc-internet-facing = "false" # true/false
-#   }
-# }
-
-
+// OPTIONAL Tags
 locals {
-  # shortened_account_number     = substr("${data.aws_caller_identity.current.account_id}", -4, -1)
-  associated_resource_name = "${var.project}-${var.aws_account_name}-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}-${var.env}"
   common_tags = {
-    Terraform          = "true"
-    Environment        = var.env
-    Project            = var.project
-    Account            = data.aws_caller_identity.current.account_id
-    GitRepo            = var.github_repo
-    GitOrg             = var.github_org
-    GitOwner           = var.github_owner
-    GitTeam            = var.github_team
-    owner              = var.github_owner
+    owner              = var.project
     se-region          = var.region
     purpose            = "Default state is dormant with no active resources. Runs a Terraform Cloud Agent when a run is queued."
     ttl                = var.ttl # hours
@@ -100,14 +78,36 @@ locals {
     hc-internet-facing = "false" # true/false
   }
 }
-################################################################################
-############# data AWS current account #########################################
-################################################################################
-data "aws_caller_identity" "current" {}
-################################################################################
-############# data AWS current aws region ######################################
-################################################################################
-data "aws_region" "current" {}
+
+
+# locals {
+#   # shortened_account_number     = substr("${data.aws_caller_identity.current.account_id}", -4, -1)
+#   associated_resource_name = "${var.project}-${var.aws_account_name}-${data.aws_caller_identity.current.account_id}-${data.aws_region.current.name}-${var.env}"
+#   common_tags = {
+#     Terraform          = "true"
+#     Environment        = var.env
+#     Project            = var.project
+#     Account            = data.aws_caller_identity.current.account_id
+#     GitRepo            = var.github_repo
+#     GitOrg             = var.github_org
+#     GitOwner           = var.github_owner
+#     GitTeam            = var.github_team
+#     owner              = var.github_owner
+#     se-region          = var.region
+#     purpose            = "Default state is dormant with no active resources. Runs a Terraform Cloud Agent when a run is queued."
+#     ttl                = var.ttl # hours
+#     terraform          = "true"  # true/false
+#     hc-internet-facing = "false" # true/false
+#   }
+# }
+# ################################################################################
+# ############# data AWS current account #########################################
+# ################################################################################
+# data "aws_caller_identity" "current" {}
+# ################################################################################
+# ############# data AWS current aws region ######################################
+# ################################################################################
+# data "aws_region" "current" {}
 ################################################################################
 ######## Common tags to be assigned to all resources ###########################
 ################################################################################
