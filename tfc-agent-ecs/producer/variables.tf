@@ -88,9 +88,6 @@ locals {
     Environment        = var.env
     Project            = var.project
     GitRepo            = var.github_repo
-    GitOrg             = var.github_org
-    GitOwner           = var.github_owner
-    GitTeam            = var.github_team
     owner              = var.github_owner
     se-region          = var.region
     purpose            = "Default state is dormant with no active resources. Runs a Terraform Cloud Agent when a run is queued."
