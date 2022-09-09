@@ -87,7 +87,6 @@ locals {
     Terraform          = "true"
     Environment        = var.env
     Project            = var.project
-    Account            = data.aws_caller_identity.current.account_id
     GitRepo            = var.github_repo
     GitOrg             = var.github_org
     GitOwner           = var.github_owner
