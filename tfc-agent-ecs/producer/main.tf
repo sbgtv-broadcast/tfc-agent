@@ -263,7 +263,11 @@ resource "aws_ssm_parameter" "notification_token" {
 }
 
 resource "aws_s3_bucket" "webhook" {
-  bucket = var.prefix
+  bucket = "${var.prefix}-agent-webhook-${var.region}"
+}
+
+resource "aws_s3_bucket_acl" "webhook" {
+  bucket = aws_s3_bucket.webhook.id # https://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
   acl    = "private"
 }
 
