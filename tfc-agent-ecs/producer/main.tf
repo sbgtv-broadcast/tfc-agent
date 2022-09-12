@@ -134,7 +134,7 @@ data "aws_iam_policy_document" "agent_policy_definition" {
   statement {
     effect    = "Allow"
     actions   = ["sts:AssumeRole"]
-    resources = [aws_iam_role.terraform.arn]
+    resources = [aws_iam_role.assume.arn]
   }
 }
 
