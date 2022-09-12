@@ -73,7 +73,7 @@ resource "aws_ssm_parameter" "agent_token" {
   name        = "${var.prefix}-tfc-agent-token"
   description = "Terraform Cloud agent token"
   type        = "SecureString"
-  value       = var.tfc_agent_token
+  value       = var.data.terraform_remote_state.tfc_management.outputs.tfe_agent_token_prod_token #var.tfc_agent_token
 }
 
 # task execution role for agent init

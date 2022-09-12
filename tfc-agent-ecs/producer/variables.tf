@@ -139,3 +139,17 @@ variable "github_owner" {
 variable "github_team" {
   default = "admins"
 }
+
+################################################################################
+###### Import data from remote state source ####################################
+################################################################################
+data "terraform_remote_state" "tfc_management" {
+  backend = "remote"
+  config = {
+    hostname     = "app.terraform.io"
+    organization = "sbgtv"
+    workspaces = {
+      name = "tfs_sbgtv-terraform-cloud-management"
+    }
+  }
+}
