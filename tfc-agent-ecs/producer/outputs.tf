@@ -1,6 +1,6 @@
-output "terraform_dev_role" {
+output "aws_iam_role_terraform_arn" {
   description = "Example IAM role created for terraform developer use in consumer workspace"
-  value       = aws_iam_role.terraform_dev_role.arn
+  value       = aws_iam_role.terraform.arn
 }
 
 output "vpc_id" {

@@ -134,7 +134,7 @@ data "aws_iam_policy_document" "agent_policy_definition" {
   statement {
     effect    = "Allow"
     actions   = ["sts:AssumeRole"]
-    resources = [aws_iam_role.terraform_dev_role.arn]
+    resources = [aws_iam_role.terraform.arn]
   }
 }
 
@@ -145,7 +145,7 @@ resource "aws_iam_role_policy_attachment" "agent_task_policy" {
 
 # a role for terraform consumer to assume into
 # you'll need to customize IAM policies to access resources as desired
-resource "aws_iam_role" "terraform_dev_role" {
+resource "aws_iam_role" "terraform" {
   name = "${var.prefix}-terraform-${var.env}"
 
   assume_role_policy = data.aws_iam_policy_document.dev_assume_role_policy_definition.json
@@ -167,7 +167,7 @@ data "aws_iam_policy_document" "dev_assume_role_policy_definition" {
 }
 
 resource "aws_iam_role_policy_attachment" "dev_ec2_role_attach" {
-  role       = aws_iam_role.terraform_dev_role.name
+  role       = aws_iam_role.terraform.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
 }
 
