@@ -185,7 +185,7 @@ data "aws_iam_policy_document" "assume_deny_policy" {
       "s3:DeleteObject",
       "s3:DeleteBucket"
     ]
-    resources = "*"
+    resources = ["*"]
   }
 }
 
