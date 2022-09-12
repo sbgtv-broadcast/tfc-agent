@@ -166,10 +166,36 @@ data "aws_iam_policy_document" "assume_role_policy_definition" {
   }
 }
 
+# resource "aws_iam_role_policy_attachment" "assume" {
+#   role       = aws_iam_role.assume.name
+#   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+# }
+
 resource "aws_iam_role_policy_attachment" "assume" {
   role       = aws_iam_role.assume.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
+
+
+data "aws_iam_policy_document" "assume_deny_policy" {
+  statement {
+    effect = "Deny"
+    actions = [
+      "s3:DeleteObjectVersions",
+      "s3:DeleteObject",
+      "s3:DeleteBucket"
+    ]
+    resources = "*"
+  }
+}
+
+resource "aws_iam_role_policy" "assume_deny_policy" {
+  name = "${var.prefix}-deny-policy"
+  role = aws_iam_role.assume.id
+
+  policy = data.aws_iam_policy_document.assume_deny_policy.json
+}
+
 
 # networking for agents to reach internet
 resource "aws_vpc" "main" {
