@@ -1,9 +1,9 @@
 provider "aws" {
   region = var.region
 
-  default_tags {
-    tags = local.common_tags
-  }
+  # default_tags {
+  #   tags = local.common_tags
+  # }
 }
 
 resource "aws_ecs_cluster" "tfc_agent" {
