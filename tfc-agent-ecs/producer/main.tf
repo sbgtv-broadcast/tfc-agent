@@ -70,7 +70,7 @@ resource "aws_ecs_task_definition" "tfc_agent" {
 }
 
 resource "aws_ssm_parameter" "agent_token" {
-  name        = "${var.prefix}-tfc-agent-token"
+  name        = "${var.prefix}-agent-token"
   description = "Terraform Cloud agent token"
   type        = "SecureString"
   value       = data.terraform_remote_state.tfc_management.outputs.tfe_agent_token_prod_token #var.tfc_agent_token
@@ -78,7 +78,7 @@ resource "aws_ssm_parameter" "agent_token" {
 
 # task execution role for agent init
 resource "aws_iam_role" "agent_init" {
-  name               = "${var.prefix}-ecs-tfc-agent-task-init-role"
+  name               = "${var.prefix}-ecs-agent-task-init-role"
   assume_role_policy = data.aws_iam_policy_document.agent_assume_role_policy_definition.json
 }
 
@@ -108,7 +108,7 @@ data "aws_iam_policy_document" "agent_init_policy" {
 
 # task role for agent
 resource "aws_iam_role" "agent" {
-  name               = "${var.prefix}-ecs-tfc-agent-role"
+  name               = "${var.prefix}-ecs-agent-role"
   assume_role_policy = data.aws_iam_policy_document.agent_assume_role_policy_definition.json
 }
 
@@ -124,7 +124,7 @@ data "aws_iam_policy_document" "agent_assume_role_policy_definition" {
 }
 
 resource "aws_iam_role_policy" "agent_policy" {
-  name = "${var.prefix}-ecs-tfc-agent-policy"
+  name = "${var.prefix}-ecs-agent-policy"
   role = aws_iam_role.agent.id
 
   policy = data.aws_iam_policy_document.agent_policy_definition.json
@@ -176,7 +176,6 @@ resource "aws_iam_role_policy_attachment" "assume" {
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
 
-
 data "aws_iam_policy_document" "assume_deny_policy" {
   statement {
     effect = "Deny"
@@ -195,7 +194,6 @@ resource "aws_iam_role_policy" "assume_deny_policy" {
 
   policy = data.aws_iam_policy_document.assume_deny_policy.json
 }
-
 
 # networking for agents to reach internet
 resource "aws_vpc" "main" {
