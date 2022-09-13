@@ -132,16 +132,20 @@ resource "aws_iam_role_policy" "agent_policy" {
 #### add other account arns here. 
 data "aws_iam_policy_document" "agent_policy_definition" {
   statement {
-    effect    = "Allow"
-    actions   = ["sts:AssumeRole"]
-    resources = [aws_iam_role.assume.arn]
+    effect  = "Allow"
+    actions = ["sts:AssumeRole"]
+    resources = [
+      aws_iam_role.assume.arn,
+      "arn:aws:iam::*:role/${aws_iam_role.assume.name}"
+    ]
   }
 }
-
+## arn:aws:iam::354435435452:role/tfc-terraform-agent
 resource "aws_iam_role_policy_attachment" "agent_task_policy" {
   role       = aws_iam_role.agent.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
+## aws_iam_role.assume.name
 
 # a role for terraform consumer to assume into
 # you'll need to customize IAM policies to access resources as desired
