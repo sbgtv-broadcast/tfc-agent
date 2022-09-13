@@ -129,7 +129,7 @@ resource "aws_iam_role_policy" "agent_policy" {
 
   policy = data.aws_iam_policy_document.agent_policy_definition.json
 }
-
+#### add other account arns here. 
 data "aws_iam_policy_document" "agent_policy_definition" {
   statement {
     effect    = "Allow"
@@ -145,8 +145,13 @@ resource "aws_iam_role_policy_attachment" "agent_task_policy" {
 
 # a role for terraform consumer to assume into
 # you'll need to customize IAM policies to access resources as desired
+
+### in other AWS accounts create this IAM role using Cloudformation template
+### at tfs_sbgtv-terraform-cloud-management/cloudformation/terraform-agent-role.yaml 
+##( to avoid catch22 or chicken and egg - provisioning without TF authentication )
+
 resource "aws_iam_role" "assume" {
-  name = "${var.prefix}-terraform-apply"
+  name = "${var.prefix}-terraform-agent"
 
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy_definition.json
 }
