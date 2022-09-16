@@ -135,7 +135,6 @@ data "aws_iam_policy_document" "agent_policy_definition" {
     effect  = "Allow"
     actions = ["sts:AssumeRole"]
     resources = [
-      aws_iam_role.assume.arn,
       "arn:aws:iam::*:role/${aws_iam_role.assume.name}"
     ]
   }
