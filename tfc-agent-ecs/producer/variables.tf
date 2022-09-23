@@ -110,6 +110,9 @@ data "aws_region" "current" {}
 ################################################################################
 ######## Project Variables #####################################################
 ################################################################################
+variable "aws_region" {
+}
+
 ###  <account name or station sign> - <aws account number> - <region> - <environment>
 variable "aws_account_name" {
   description = "AWS account name or SBGTV Station Call Sign: all lowercase, no spaces"
